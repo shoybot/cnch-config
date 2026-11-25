@@ -38,3 +38,39 @@
         key: "/org/cinnamon/desktop/interface/clock-show-date"
         value: "true"
         state: present
+
+    ## Install MCreator
+    vars:
+    mcreator_version: "2026.2.33518"
+    mcreator_url: "https://github.com/MCreator/MCreator/releases/download/2026.2.33518/MCreator.2026.2.Linux.64bit.tar.gz"
+
+  tasks:
+    # Create the target installation directory
+    - name: Ensure /opt/mcreator directory exists
+      ansible.builtin.file:
+        path: /opt/mcreator
+        state: directory
+        mode: '0755'
+
+    # Download and extract MCreator (strips the top-level folder so mcreator.sh is at /opt/mcreator/mcreator.sh)
+    - name: Download and extract MCreator
+      ansible.builtin.unarchive:
+        src: "{{ mcreator_url }}"
+        dest: /opt/mcreator
+        remote_src: true
+        extra_opts:
+          - --strip-components=1
+        creates: "/opt/mcreator/mcreator-{{ mcreator_version }}.installed"
+
+    # Mark this version as installed so Ansible skips re-downloading on future runs
+    - name: Record installed MCreator version
+      ansible.builtin.file:
+        path: "/opt/mcreator/mcreator-{{ mcreator_version }}.installed"
+        state: touch
+        mode: '0644'
+    # Create desktop shortcut
+    - name: Install MCreator desktop shortcut
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/mcreator.desktop"
+        dest: /usr/share/applications/mcreator.desktop
+        mode: '0644'
