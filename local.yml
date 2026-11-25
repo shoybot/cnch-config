@@ -58,7 +58,7 @@
           - --strip-components=1
         creates: /opt/mcreator/mcreator.sh
 
-    - name: Install MCreator desktop shortcut
+    - name: Add MCreator shortcut to Applications 
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/mcreator.desktop"
         dest: /usr/share/applications/mcreator.desktop
