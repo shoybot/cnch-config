@@ -21,6 +21,7 @@
           home.homeDirectory = "/home/ninja";
           home.stateVersion = "26.05";
           targets.genericLinux.enable = true;
+          targets.genericLinux.gpu.enable = true;
           programs.home-manager.enable = true;
 
           # Packages & settings for ninja only
