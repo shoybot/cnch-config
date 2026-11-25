@@ -1,0 +1,40 @@
+# local.yml
+---
+- name: Configure Dojo Laptop
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    # System-level APT packages (for all users)
+    - name: Install baseline system packages
+      ansible.builtin.apt:
+        name:
+          - git
+          - vim
+          - unattended-upgrades
+        state: present
+        update_cache: true
+
+    # Unwanted packages (for all users)
+    - name: Remove unwanted packages
+      ansible.builtin.apt:
+        name:
+          - hexchat
+        state: absent
+
+    # Flatpak apps (for all users)
+    - name: Install Flatpak applications
+      community.general.flatpak:
+        name:
+          - org.mozilla.firefox
+        state: present
+
+    # "Ninja" account settings
+    - name: Set Cinnamon desktop preferences for Ninja
+      become: true
+      become_user: ninja
+      community.general.dconf:
+        key: "/org/cinnamon/desktop/interface/clock-show-date"
+        value: "true"
+        state: present
