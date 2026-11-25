@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=MCreator
+Comment=Minecraft Mod Maker
+Exec=/opt/mcreator/mcreator.sh
+Icon=/opt/mcreator/icon.png
+Terminal=false
+Type=Application
+Categories=Development;IDE;
