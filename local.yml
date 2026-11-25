@@ -4,6 +4,10 @@
   hosts: localhost
   connection: local
   become: true
+  vars:
+    mcreator_version: "2026.2.33518"
+    mcreator_url: "https://github.com/MCreator/MCreator/releases/download/2026.2.33518/MCreator.2026.2.Linux.64bit.tar.gz"
+
 
   tasks:
     # System-level APT packages (for all users)
@@ -40,11 +44,6 @@
         state: present
 
     ## Install MCreator
-    vars:
-    mcreator_version: "2026.2.33518"
-    mcreator_url: "https://github.com/MCreator/MCreator/releases/download/2026.2.33518/MCreator.2026.2.Linux.64bit.tar.gz"
-
-  tasks:
     # Create the target installation directory
     - name: Ensure /opt/mcreator directory exists
       ansible.builtin.file:
